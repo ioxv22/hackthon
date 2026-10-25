@@ -1,0 +1,29 @@
+THE PROBLEM
+Choosing an AI model for government use takes more than comparing answers.
+Teams must assess performance, security, privacy, and applicable requirements.
+When tests and supporting documents are scattered, evaluation becomes harder to coordinate, review, and repeat.
+OUR SOLUTION
+AIGov Compass brings this process into one structured workflow.
+It helps government teams define their use case, compare model candidates, review evaluation evidence, and document a human decision.
+THE USER JOURNEY
+The journey starts with the intended use case and its requirements.
+Reviewers then compare candidates and inspect test results.
+Each result shows its evaluation method and limitations, helping reviewers understand what the evidence supports - and what still needs investigation.
+THE EVIDENCE GATE
+Our key distinction is the evidence gate.
+Strong performance alone does not make a model ready for deployment.
+If a mandatory requirement lacks supporting evidence, approval is blocked.
+The platform explains the gap and the next action required.
+An authorized human reviewer remains responsible for the final decision.
+DOCUMENT AND REASSESS
+The model passport records the evaluated use case, model information, results, evidence gaps, and reviewer decision.
+When the model version changes, the prototype requests reassessment while preserving the previous decision as a historical record.
+VALUE AND NEXT STEPS
+We target an 80 percent reduction in evaluation time.
+This remains a goal to validate through equivalent manual and platform-assisted tasks, including human review.
+Our proposed 90-day roadmap covers requirement validation, a limited pilot, and improvements based on measured results.
+AIGOV COMPASS
+AIGov Compass: choose the right model, see the evidence, and keep humans in control.
+
+Production note: locally synthesized English narration (Microsoft Zira Desktop).
+All website imagery is captured from the working prototype. Demo footage contains simulated data and results.

@@ -66,6 +66,12 @@ Live replies are not persisted in browser storage. Failures remain visible with 
 
 The **Pitch & 90-day plan** page includes the five-minute outline, an independent 2–3 minute video script, a printable seven-slide deck, proposed 90-day milestones, and honest committee Q&A.
 
+## English pitch video
+
+The rendered [1080p pitch video](./pitch-video/AIGovCompass_PitchVideo_EN_1080p.mp4) is accompanied by [English subtitles](./pitch-video/AIGovCompass_PitchVideo_EN.srt), the [voiceover script](./pitch-video/AIGovCompass_Pitch_Voiceover.txt), the [PowerShell build script](./pitch-video/Build-AIGovCompass-Pitch.ps1), and the original [prototype screenshots](./pitch-video/AIGovCompass_Pitch_Screenshots/). The footage is an illustrated walkthrough of the captured prototype; Demo footage uses simulated data and results. The video does not claim verified Live API behavior, real government dataset use, government endorsement, or compliance certification.
+
+To rebuild on Windows, use Windows PowerShell with the `Microsoft Zira Desktop` speech voice and FFmpeg installed. Update the `$Ffmpeg` path near the top of the script to match the local FFmpeg executable, then run the script from `pitch-video`. It writes the MP4, SRT, synthesized WAV, and narration text beside itself.
+
 ## Open-data tests
 
 The official Data Dubai page for **Annual Percentage Change in Consumer Price Index- Base Year 2021** was accessed on 2026-10-23. The metadata page described monthly/quarterly CPI changes and listed the dataset as Open, but its data tables displayed “No data available” and the data-download controls were disabled in the accessed session. Therefore this prototype does not claim to use that dataset, and it contains no fabricated public data or reference answers.
