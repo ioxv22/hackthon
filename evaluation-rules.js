@@ -15,9 +15,14 @@
 
   function approvalBlockers(findings, mandatoryIds) {
     const mandatory = new Set(mandatoryIds || []);
-    return (findings || []).filter(item => mandatory.has(item.id) &&
+    const items = Array.isArray(findings) ? findings : [];
+    const blockers = items.filter(item => mandatory.has(item.id) &&
       !(item.finding === "Met" ||
-        (item.finding === "Not applicable" && Boolean(item.justification && item.justification.trim()))));
+        (item.finding === "Not applicable" && typeof item.justification === "string" && item.justification.trim())));
+    for (const id of mandatory) {
+      if (!items.some(item => item.id === id)) blockers.push({ id, finding: "Insufficient evidence" });
+    }
+    return blockers;
   }
 
   function validateOpenDataPackage(data) {

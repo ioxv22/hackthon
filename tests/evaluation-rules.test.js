@@ -18,6 +18,13 @@ test("mandatory evidence findings cannot be bypassed by a score", () => {
     { id: "security", finding: "Pending review" }
   ], ids).map(item => item.id), ["security"]);
   assert.deepEqual(approvalBlockers([
+    { id: "identity", finding: "Not met" },
+    { id: "security", finding: "Insufficient evidence" }
+  ], ids).map(item => item.id), ids);
+  assert.deepEqual(approvalBlockers([
+    { id: "identity", finding: "Met" }
+  ], ids).map(item => item.id), ["security"]);
+  assert.deepEqual(approvalBlockers([
     { id: "identity", finding: "Not applicable", justification: "Out of scope" },
     { id: "security", finding: "Met" }
   ], ids), []);
@@ -31,7 +38,7 @@ test("open-data import requires source metadata and ten traceable tests", () => 
     metadata: { title: "Open dataset", sourceUrl: "https://example.gov/dataset", license: "Open Data Licence", dataDate: "2025-01", accessedDate: "2026-10-23", transformations: "No transformations" },
     rows: [{ rowId: "r1", fields: { amount: 7 } }],
     tests: Array.from({ length: 10 }, (_, i) => ({
-      id: `Q${i + 1}`, type: i === 9 ? "unanswerable" : "extraction", question: `Question ${i + 1}`,
+      id: `Q${i + 1}`, type: ["extraction", "extraction", "calculation", "calculation", "summary", "summary", "summary", "summary", "summary", "unanswerable"][i], question: `Question ${i + 1}`,
       expectedAnswer: `Answer ${i + 1}`, rowIds: ["r1"], fields: ["amount"]
     }))
   };

@@ -3,6 +3,30 @@
 **The right model, with clear evidence, and a human decision.**
 From government use case to evidence-backed AI approval.
 
+## دليل التسليم السريع بالعربية
+
+هذا نموذج أولي للهاكثون، وليس خدمة حكومية أو اعتماداً أو شهادة امتثال. يبدأ التطبيق في **الوضع التجريبي** ببيانات افتراضية ثابتة، ولا يتصل بمزودي النماذج. هدف خفض وقت التقييم البالغ ٨٠٪ غير مقاس أو مضمون.
+
+### تشغيل العرض
+
+1. افتح `index.html` في متصفح حديث، أو شغّل الخادم المحلي وفق خطوات Live أدناه.
+2. اترك الوضع مضبوطاً على **تجريبي** ثم اضغط **ابدأ عرض التحكيم**؛ يبدأ المسار من حالة الاستخدام دون إرسال طلب خارجي.
+3. اتبع الخطوات حتى مقارنة النماذج، الاختبارات، حالة النقص الإلزامي، الحالة التجريبية المستقلة، قرار المراجع، والتقرير.
+4. من **النشر والمراقبة** حاكِ تحديث الإصدار؛ يحتفظ التطبيق بسجل الموافقة السابقة ويطلب إعادة تقييم النسخة الجديدة.
+5. من **جواز النموذج** نزّل JSON، أو اختر **طباعة / حفظ بصيغة PDF** ثم احفظ الملف من نافذة الطباعة. لم يُختبر حفظ PDF فعلياً في هذه البيئة.
+6. استخدم **إعادة ضبط العرض** للعودة إلى بيانات البداية. تُحفظ بيانات العرض والاستيراد في تخزين المتصفح المحلي.
+
+### حالة التحقق لهذا التسليم
+
+- اكتملت رحلة التحكيم الإرشادية في المتصفح، بما فيها منع الموافقة عند نقص الدليل، والموافقة البشرية التجريبية المكتملة، وتحديث الإصدار مع الاحتفاظ بالسجل السابق.
+- اختُبر فشل Live بمحاكاة تعذّر الخادم: ظهر الخطأ وخيار إعادة المحاولة، ولم تُستبدل الردود بإجابات Demo. هذا اختبار للواجهة فقط، وليس اختباراً للمزودين.
+- فُحص RTL والتبديل إلى العربية على شاشات التطبيق. لم يُنفذ اختبار شامل على أجهزة جوال فعلية.
+- **لم يُختبر الخادم أو مزودا API فعلياً** لأن Node.js غير متاح في بيئة التحضير. لم يُعثر على دليل المسابقة ضمن ملفات المشروع؛ لذلك لا يمكن التحقق من مطابقة كل بند للمسابقة.
+
+### نسخة احتياطية
+
+حُفظت الملفات الأساسية قبل تعديلات الإنهاء في `.backup-20261025-162053`. هذا المجلد مستثنى من Git بواسطة `.gitignore` ولا يحتاج إلى رفعه.
+
 A hackathon prototype for responsible AI and smart cognitive government. It has no official endorsement, certification, government approval, or production integrations. The 80% time-reduction figure is a project target—not a measured or guaranteed result.
 
 ## Run the demo
@@ -15,7 +39,7 @@ Open `index.html` in a modern browser. Demo Mode uses fixed fictional data and d
 
 **API status for this delivery: written, not tested.** Node.js is not installed in the environment in which these changes were prepared, so the local backend and upstream endpoints could not be exercised. Do not represent Live mode as verified or working until it has been tested in the intended presentation environment.
 
-1. Install Node.js 20 or newer.
+1. Install Node.js 20.3 or newer.
 2. Open a terminal in this folder.
 3. Run `node server.js`.
 4. Open `http://127.0.0.1:4173` (do not open the HTML as a `file://` URL for Live mode).
@@ -76,4 +100,12 @@ Focused rules tests use Node's built-in test runner:
 node --test tests\evaluation-rules.test.js
 ```
 
-The browser prototype was checked for JavaScript load, Arabic/RTL screen switching, local dataset import and ten-row rendering, and the existing Demo journey. The backend and upstream API were not tested because Node.js is unavailable in the preparation environment. Run the test command and test the upstream API in the actual presentation environment before claiming those checks passed.
+Run these checks in the presentation environment:
+
+```powershell
+node --check app.js
+node --check server.js
+node --test tests\evaluation-rules.test.js
+```
+
+In this preparation environment, `node --test tests\evaluation-rules.test.js` could not run because `node` is not installed or available on `PATH`; VS Code test discovery also has no registered test controller. Browser checks covered the guided Demo flow, score and mandatory-gate rules, a stubbed Live backend failure with retry/no fallback, Arabic/RTL rendering, and JSON/HTML report content. The real backend and upstream APIs were not tested. PDF saving and a physical-device mobile pass still need manual verification. Do not claim those checks passed until performed in the presentation environment.
