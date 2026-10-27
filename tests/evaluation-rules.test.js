@@ -1,7 +1,7 @@
 "use strict";
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { calculateTimeReduction, approvalBlockers, validateOpenDataPackage } = require("../evaluation-rules.js");
+const { calculateTimeReduction, approvalBlockers, traceableEvidenceBlockers, validateOpenDataPackage } = require("../evaluation-rules.js");
 
 test("time reduction uses comparable manual and assisted hours", () => {
   assert.equal(calculateTimeReduction(10, 2), 80);
@@ -30,7 +30,15 @@ test("mandatory evidence findings cannot be bypassed by a score", () => {
   ], ids), []);
   assert.equal(approvalBlockers([
     { id: "identity", finding: "Not applicable", justification: "" }
-  ], ids).length, 1);
+  ], ["identity"]).length, 1);
+});
+
+test("traceable mandatory evidence needs a finding, source reference, reviewer, and date", () => {
+  const pending = { id: "g1", mandatory: true, applicability: "applicable", status: "pending-review", evidenceReference: "", reviewer: "", reviewedAt: null };
+  assert.deepEqual(traceableEvidenceBlockers([pending]).map(item => item.id), ["g1"]);
+  assert.deepEqual(traceableEvidenceBlockers([{ ...pending, status: "satisfied", evidenceReference: "DOC-7", reviewer: "Reviewer", reviewedAt: "2026-10-27" }]), []);
+  assert.deepEqual(traceableEvidenceBlockers([{ ...pending, applicability: "not-applicable", status: "not-applicable", justification: "Not used by this workflow", reviewer: "Reviewer", reviewedAt: "2026-10-27" }]), []);
+  assert.deepEqual(traceableEvidenceBlockers([{ ...pending, applicability: "pending-review", status: "satisfied", evidenceReference: "DOC-7", reviewer: "Reviewer", reviewedAt: "2026-10-27" }]).map(item => item.id), ["g1"]);
 });
 
 test("open-data import requires source metadata and ten traceable tests", () => {
@@ -39,7 +47,8 @@ test("open-data import requires source metadata and ten traceable tests", () => 
     rows: [{ rowId: "r1", fields: { amount: 7 } }],
     tests: Array.from({ length: 10 }, (_, i) => ({
       id: `Q${i + 1}`, type: ["extraction", "extraction", "calculation", "calculation", "summary", "summary", "summary", "summary", "summary", "unanswerable"][i], question: `Question ${i + 1}`,
-      expectedAnswer: `Answer ${i + 1}`, rowIds: ["r1"], fields: ["amount"]
+      expectedAnswer: `Answer ${i + 1}`, rowIds: ["r1"], fields: ["amount"],
+      evaluationMethod: "Human review against the cited source row."
     }))
   };
   assert.deepEqual(validateOpenDataPackage(valid), []);

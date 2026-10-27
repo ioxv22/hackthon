@@ -59,8 +59,8 @@ function readJson(req) {
   });
 }
 
-async function callProvider(provider, prompt, clientSignal) {
-  const url = new URL(PROVIDERS[provider]);
+async function callProviderUrl(endpoint, prompt, clientSignal) {
+  const url = new URL(endpoint);
   url.searchParams.set("text", prompt);
   const timeout = AbortSignal.timeout(30_000);
   const signal = AbortSignal.any([timeout, clientSignal]);
@@ -146,7 +146,7 @@ const server = http.createServer(async (req, res) => {
     });
     activeProviderRequests++;
     try {
-      const result = await callProvider(body.provider, body.prompt, controller.signal);
+      const result = await callProviderUrl(PROVIDERS[body.provider], body.prompt, controller.signal);
       if (!clientDisconnected && !res.destroyed) sendJson(res, 200, result);
     } catch (error) {
       if (clientDisconnected || controller.signal.reason?.message === "Client cancelled the request.") return;
@@ -181,6 +181,12 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
-server.listen(PORT, "127.0.0.1", () => {
-  process.stdout.write(`AIGov Compass demo server listening at http://127.0.0.1:${PORT}\n`);
-});
+if (require.main === module) {
+  server.listen(PORT, "127.0.0.1", () => {
+    process.stdout.write(`AIGov Compass demo server listening at http://127.0.0.1:${PORT}\n`);
+  });
+} else {
+  module.exports = {
+    server
+  };
+}

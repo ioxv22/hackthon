@@ -7,6 +7,7 @@
   <meta name="description" content="AIGov Compass: From government use case to evidence-backed AI approval.">
   <title>AIGov Compass — Responsible AI, made actionable</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="department-assessment.css">
 </head>
 <body>
   <div class="app-shell">
@@ -21,7 +22,9 @@
         <button class="nav-link" data-page="intake"><span class="nav-icon">＋</span><span data-en="Use-case intake" data-ar="استقبال حالة الاستخدام">Use-case intake</span><span class="nav-step">01</span></button>
         <button class="nav-link" data-page="registry"><span class="nav-icon">◈</span><span data-en="Model registry" data-ar="سجل النماذج">Model registry</span><span class="nav-step">02</span></button>
         <button class="nav-link" data-page="workspace"><span class="nav-icon">⌁</span><span data-en="Evaluation" data-ar="التقييم">Evaluation</span><span class="nav-step">03</span></button>
+        <button class="nav-link" data-page="department-assessment"><span class="nav-icon">◎</span><span data-en="Role fit &amp; improvement" data-ar="ملاءمة الدور والتحسين">Role fit &amp; improvement</span></button>
         <button class="nav-link" data-page="evidence"><span class="nav-icon">▤</span><span data-en="Evidence matrix" data-ar="مصفوفة الأدلة">Evidence matrix</span></button>
+        <button class="nav-link" data-page="library"><span class="nav-icon">⌕</span><span data-en="Sources &amp; guidance" data-ar="المصادر والإرشادات">Sources &amp; guidance</span></button>
         <button class="nav-link" data-page="approval"><span class="nav-icon">✓</span><span data-en="Human review" data-ar="المراجعة البشرية">Human review</span></button>
         <button class="nav-link" data-page="readiness"><span class="nav-icon">⌂</span><span data-en="Deployment &amp; monitoring" data-ar="النشر والمراقبة">Deployment &amp; monitoring</span></button>
         <button class="nav-link" data-page="compare"><span class="nav-icon">⇄</span><span data-en="Live model comparison" data-ar="مقارنة النماذج المباشرة">Live model comparison</span><span class="nav-step">LIVE</span></button>
@@ -30,6 +33,7 @@
         <button class="nav-link" data-page="open-data"><span class="nav-icon">▦</span><span data-en="Open-data tests" data-ar="اختبارات البيانات المفتوحة">Open-data tests</span></button>
       </nav>
       <div class="sidebar-bottom">
+        <button class="nav-link" data-page="idea-impact"><span class="nav-icon">✦</span><span data-en="Idea &amp; Impact" data-ar="الفكرة والأثر">Idea &amp; Impact</span></button>
         <button class="nav-link" data-page="pitch"><span class="nav-icon">▧</span><span data-en="Pitch &amp; 90-day plan" data-ar="العرض وخطة ٩٠ يوماً">Pitch &amp; 90-day plan</span></button>
         <button class="nav-link" data-page="project"><span class="nav-icon">ⓘ</span><span data-en="Project &amp; sources" data-ar="المشروع والمصادر">Project &amp; sources</span></button>
         <div class="side-note"><span class="live-dot"></span><span id="environment-label">DEMO ENVIRONMENT</span></div>
@@ -43,7 +47,7 @@
         <div class="top-actions">
           <span class="demo-chip" id="mode-chip"><span class="live-dot"></span> DEMO MODE · SIMULATED</span>
           <button class="icon-button" id="mode-toggle" type="button" title="Switch Demo or Live mode">Switch to Live</button>
-          <button class="icon-button" id="guided-demo" title="Start judging demo"><span>▷</span> <span data-en="Start judging demo" data-ar="ابدأ عرض التحكيم">Start judging demo</span></button>
+          <button class="icon-button" id="guided-demo" title="Watch improvement in 90 seconds"><span>▷</span> <span data-en="Watch improvement · 90 sec" data-ar="شاهد التحسين · ٩٠ ثانية">Watch improvement · 90 sec</span></button>
           <button class="language-button" id="language-toggle" aria-label="Switch language">عربي</button>
           <div class="avatar" title="Demo reviewer">AR</div>
         </div>
@@ -52,9 +56,40 @@
       <footer class="footer-note"><span id="footer-disclaimer">Prototype for demonstration only · No official endorsement, certification, or government approval</span><span id="footer-region">UAE · Responsible AI</span></footer>
     </main>
   </div>
+  <div class="government-assistant" id="government-assistant">
+    <button class="government-launcher" id="government-assistant-open" type="button" aria-controls="government-assistant-panel" aria-expanded="false" aria-label="Open Government Assistant">
+      <span aria-hidden="true">✦</span><span data-en="Government Assistant" data-ar="مساعد حكومي">Government Assistant</span>
+    </button>
+    <section class="government-panel" id="government-assistant-panel" aria-labelledby="government-assistant-title" hidden>
+      <header class="government-header">
+        <div><span class="government-header-icon" aria-hidden="true">✦</span><div><h2 id="government-assistant-title">مساعد حكومي | Government Assistant</h2><p data-en="Project guide only · not a government representative or approval service." data-ar="مساعد للمشروع فقط · ليس ممثلاً حكومياً أو جهة اعتماد.">Project guide only · not a government representative or approval service.</p></div></div>
+        <div class="government-header-actions">
+          <button id="government-assistant-clear" type="button" aria-label="Clear conversation" title="Clear conversation">↻</button>
+          <button id="government-assistant-close" type="button" aria-label="Close assistant">×</button>
+        </div>
+      </header>
+      <div class="government-disclosure" data-en="Local helper: answers use only the assessment currently open in this browser. Nothing is sent to an external service." data-ar="مساعد محلي: يعتمد على التقييم المفتوح في هذا المتصفح فقط، ولا يرسل أي بيانات لخدمة خارجية.">Local helper: answers use only the assessment currently open in this browser. Nothing is sent to an external service.</div>
+      <div class="government-welcome" id="government-assistant-welcome" data-en="Hello! I can explain the current test findings and next steps. I only use information already shown in this project." data-ar="هلا! أشرح لك نتائج الاختبارات والخطوة التالية، اعتماداً على المعلومات الظاهرة في المشروع فقط.">Hello! I can explain the current test findings and next steps. I only use information already shown in this project.</div>
+      <div class="government-suggestions" id="government-suggestions">
+        <button type="button" data-assistant-question="why" data-en="Why did this response fail?" data-ar="ليش هذا الرد أخفق؟">ليش هذا الرد أخفق؟</button>
+        <button type="button" data-assistant-question="improve" data-en="What improvement is proposed?" data-ar="شو التعديل المقترح؟">شو التعديل المقترح؟</button>
+        <button type="button" data-assistant-question="regression" data-en="Did the retest create another issue?" data-ar="هل التحسين سبّب مشكلة ثانية؟">هل التحسين سبّب مشكلة ثانية؟</button>
+        <button type="button" data-assistant-question="remaining" data-en="What remains before human review?" data-ar="شو باقي قبل المراجعة البشرية؟">شو باقي قبل المراجعة البشرية؟</button>
+      </div>
+      <div class="government-messages" id="government-messages" role="log" aria-live="polite"></div>
+      <form class="government-compose" id="government-assistant-form">
+        <label class="visually-hidden" for="government-assistant-input" data-en="Ask Government Assistant" data-ar="اسأل مساعد حكومي">Ask Government Assistant</label>
+        <textarea id="government-assistant-input" maxlength="500" rows="2" placeholder="Ask about this assessment…" required></textarea>
+        <button class="button primary" id="government-assistant-send" type="submit">Send</button>
+      </form>
+      <div class="government-disclaimer" data-en="Explanatory only. Cannot change scores, evidence, or human decisions." data-ar="للشرح فقط؛ لا يغيّر الدرجات أو الأدلة أو قرارات المراجعين.">Explanatory only. Cannot change scores, evidence, or human decisions.</div>
+    </section>
+  </div>
   <div id="toast-region" class="toast-region" aria-live="polite"></div>
   <div id="modal-root"></div>
   <script src="evaluation-rules.js"></script>
+  <script src="evidence-library.js"></script>
+  <script src="department-assessment.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

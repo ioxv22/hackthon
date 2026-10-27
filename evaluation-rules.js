@@ -25,6 +25,16 @@
     return blockers;
   }
 
+  function traceableEvidenceBlockers(records) {
+    return (Array.isArray(records) ? records : []).filter(item => item.mandatory &&
+      !(item.applicability === "applicable" && item.status === "satisfied" &&
+        typeof item.evidenceReference === "string" && item.evidenceReference.trim() &&
+        typeof item.reviewer === "string" && item.reviewer.trim() && item.reviewedAt) &&
+      !(item.applicability === "not-applicable" && item.status === "not-applicable" &&
+        typeof item.justification === "string" && item.justification.trim() &&
+        typeof item.reviewer === "string" && item.reviewer.trim() && item.reviewedAt));
+  }
+
   function validateOpenDataPackage(data) {
     const errors = [];
     if (!data || typeof data !== "object" || Array.isArray(data)) return ["Expected a JSON object."];
@@ -73,5 +83,5 @@
     return errors;
   }
 
-  return { calculateTimeReduction, approvalBlockers, validateOpenDataPackage };
+  return { calculateTimeReduction, approvalBlockers, traceableEvidenceBlockers, validateOpenDataPackage };
 });
